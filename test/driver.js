@@ -11,6 +11,12 @@ let should = chai.should();
 chai.use(chaiHttp);
 
 describe('Drivers', () => {
+    beforeEach((done) => {
+		Driver.remove({}, (err) => {
+            done();
+		});
+	});
+
     describe('/POST driver', () => {
         it('it should POST a new driver', (done) => {
             let driver = {

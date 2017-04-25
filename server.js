@@ -34,8 +34,6 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.text());
 app.use(bodyParser.json({ type: 'application/json'}));
 
-app.get("/", (req, res) => res.json({message: "Welcome to our Bookstore!"}));
-
 app.route('/driver')
 	.post(driverRoutes.createDriver);
 

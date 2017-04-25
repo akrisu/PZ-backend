@@ -85,5 +85,22 @@ describe('Users', () => {
                 })
             });
         });
+
+        it('should return an error if user doesnt exist', (done) => {
+            let user = {
+                username: 'test',
+                password: 'test'
+            };
+
+            chai.request(server)
+            .post('/user/login')
+            .send(user)
+            .end((err, res) => {
+                res.should.have.status(400);
+                res.body.should.be.a('object');
+                res.body.should.have.property('message').eql('User doesnt exists');
+                done();
+            });
+        })
     });
 });

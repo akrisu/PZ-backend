@@ -11,10 +11,10 @@ function createDriver(req, res) {
     // Save it into DB.
     newDriver.save((err, driver) => {
         if (err) {
-            res.status(400).send(err);
-        } else {
-            res.json({ message: 'Driver successfully created!', driver });
+            return res.status(400).send(err);
         }
+
+        return res.json({ message: 'Driver successfully created!', driver });
     });
 }
 

@@ -11,7 +11,7 @@ function createUser(req, res) {
 
     User.findOne({ username: req.body.username }, (err, foundUser) => {
         if (foundUser) {
-            return res.status(400).json({ message: 'User already exists'});
+            return res.status(400).json({ message: 'User already exists' });
         }
 
         newUser.save((err, user) => {
@@ -26,6 +26,10 @@ function createUser(req, res) {
 
 function loginUser(req, res) {
     User.findOne({ username: req.body.username }, (err, foundUser) => {
+        if (!foundUser) {
+            return res.status(400).json({ message: 'User doesnt exists' });
+        }
+
         if (foundUser) {
             return res.status(200).json({ token: '' });
         }

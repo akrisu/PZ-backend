@@ -7,8 +7,7 @@ let DriverSchema = new Schema(
         secondName: { type: String, required: true },
         workerId: { type: Number, required: true },
         phone: { type: String, required: false },
-        workStartDate: { type: Date, required: true }
-
+        workStartDate: { type: Date, required: false }
     }
 );
 
