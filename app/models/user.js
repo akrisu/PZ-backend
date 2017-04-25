@@ -1,18 +1,12 @@
 let mongoose = require('mongoose');
 let Schema = mongoose.Schema;
 
-let UserSchema = new Schema({
-
-});
-
-UserSchema.pre('save', next => {
-    now = new Date();
-
-    if (!this.createdAt) {
-        this.createdAt = now;
+let UserSchema = new Schema(
+    {
+        username: { type: String, required: true },
+        password: { type: String, required: true },
+        salt: { type: String }
     }
-
-    next();
-});
+);
 
 module.exports = mongoose.model('user', UserSchema);
