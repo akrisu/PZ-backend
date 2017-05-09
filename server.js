@@ -5,17 +5,22 @@ let morgan = require('morgan');
 let bodyParser = require('body-parser');
 let port = 8080;
 let config = require('config'); //we load the db location from the JSON files
+let env = require('./env/config');
+let cors = require('cors');
 
 let book = require('./app/routes/book');
 let driverRoutes = require('./app/routes/driver');
 let userRoutes = require('./app/routes/user');
 
+let router = express.Router();
 
 //db options
 let options = {
 	server: { socketOptions: { keepAlive: 1, connectTimeoutMS: 30000 } },
 	replset: { socketOptions: { keepAlive: 1, connectTimeoutMS : 30000 } }
 };
+
+env.setConfig();
 
 //db connection
 mongoose.connect(config.DBHost, options);
@@ -29,29 +34,31 @@ if(config.util.getEnv('NODE_ENV') !== 'test') {
 }
 
 //parse application/json and look for raw text
-app.use(bodyParser.json());
+app.use(cors());
 app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.json());
 app.use(bodyParser.text());
-app.use(bodyParser.json({ type: 'application/json'}));
 
-app.route('/driver')
+router.route('/driver')
 	.post(driverRoutes.createDriver);
 
-app.route('/user/login')
+router.route('/user/login')
 	.post(userRoutes.loginUser);
 
-app.route('/user/register')
+router.route('/user/register')
 	.post(userRoutes.createUser);
 
-app.route("/book")
+router.route("/book")
 	.get(book.getBooks)
 	.post(book.postBook);
 
-app.route("/book/:id")
+router.route("/book/:id")
 	.get(book.getBook)
 	.delete(book.deleteBook)
 	.put(book.updateBook);
 
+
+app.use('/api', router);
 
 app.listen(port);
 console.log("Listening on port " + port);

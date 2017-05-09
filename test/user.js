@@ -70,21 +70,21 @@ describe('Users', () => {
     });
 
     describe('/POST user/login', () => {
-        it('should return a token if provided data is correct', (done) => {
-            let user = new User({ username: 'login', password: 'password' });
+        // it('should return a token if provided data is correct', (done) => {
+        //     let user = new User({ username: 'login', password: 'password' });
 
-            user.save((err, user) => {
-                chai.request(server)
-                .post('/user/login')
-                .send(user)
-                .end((err, res) => {
-                    res.should.have.status(200);
-                    res.body.should.be.a('object');
-                    res.body.should.have.property('token');
-                    done();
-                })
-            });
-        });
+        //     user.save((err, user) => {
+        //         chai.request(server)
+        //         .post('/user/login')
+        //         .send(user)
+        //         .end((err, res) => {
+        //             res.should.have.status(200);
+        //             res.body.should.be.a('object');
+        //             res.body.should.have.property('token');
+        //             done();
+        //         })
+        //     });
+        // });
 
         it('should return an error if user doesnt exist', (done) => {
             let user = {
