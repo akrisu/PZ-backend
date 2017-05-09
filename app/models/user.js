@@ -5,7 +5,8 @@ let UserSchema = new Schema(
     {
         username: { type: String, required: true },
         password: { type: String, required: true },
-        salt: { type: String }
+        salt: { type: String },
+        role: { type: String }
     }
 );
 
