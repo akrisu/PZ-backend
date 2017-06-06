@@ -18,4 +18,34 @@ function createDriver(req, res) {
     });
 }
 
-module.exports = { createDriver };
+function getDrivers(req, res) {
+    Driver.find({}, function(err, driverList) {
+        if (err) {
+            return res.status(500).send(err);
+        }
+
+        return res.json({ driverList });
+    });
+}
+
+function getAvaliableDrivers(req, res) {
+    Driver.find({ inUse: false }, function(err, driverList) {
+        if (err) {
+            return res.status(500).send(err);
+        }
+
+        return res.json({ driverList });
+    });
+}
+
+function deleteDriver(req, res) {
+    Driver.deleteOne({ _id: req.params.id, inUse: false }, function(err) {
+        if (err) {
+            return res.status(500).send(err);
+        }
+
+        return res.status(200).json({ message: 'Driver deleted successfully' });
+    })
+}
+
+module.exports = { createDriver, getAvaliableDrivers, deleteDriver, getDrivers };
